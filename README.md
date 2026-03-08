@@ -1,10 +1,10 @@
-# Fox_lost-trails
+# lost-trails
 
 A story-driven indie game about memory, time, and identity.
 
 ## Overview
 
-**Fox_lost-trails** is a narrative adventure game developed with **Godot** and designed to run directly in the **browser**. The game will be published on **itch.io**.
+**lost-trails** is a narrative adventure game developed with **Godot** and designed to run directly in the **browser**. The game will be published on **itch.io**.
 
 You play as a fox that wakes up after being subjected to a mysterious experiment. With no memories of the past, the fox begins experiencing uncontrolled time jumps, traveling through different eras. During these journeys, the player slowly uncovers the truth behind the experiment and the fox's origin.
 

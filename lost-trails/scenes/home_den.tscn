@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b53ngrsxq6o4e"]
+
+[ext_resource type="Texture2D" uid="uid://ccuyqxl8h6wpy" path="res://assats/black_pannel.png" id="1"]
+
+[node name="Level_01" type="Node2D" unique_id=29613074]
+
+[node name="Background#TextureRect" type="TextureRect" parent="." unique_id=1205192038]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("1")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Level_01#TileMap" type="TileMap" parent="." unique_id=1282387036]
+position = Vector2(640, 360)
+format = 2
+
+[node name="Level_01#CanvasLayer" type="CanvasLayer" parent="." unique_id=2065087879]

@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://77h3akgbg6ed"]
+
+[ext_resource type="Script" uid="uid://c8wadsiy86inc" path="res://start_screen.gd" id="1_o7i0r"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="1_tx5wa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tx5wa"]
+content_margin_left = 30.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="StartScreen" type="Control" unique_id=1558602469]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o7i0r")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1898177423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_tx5wa")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=880933713]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="CenterContainer" unique_id=1718600654]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="CenterContainer/Menu" unique_id=955467119]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+theme_override_styles/normal = SubResource("StyleBoxFlat_tx5wa")
+text = "lost trails"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/Menu" unique_id=491088873]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="CenterContainer/Menu" unique_id=373790683]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Start Game"
+
+[node name="CreditsContainer" type="MarginContainer" parent="." unique_id=1179930907]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Credits" type="Label" parent="CreditsContainer" unique_id=1703391105]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Developed by brødre-Entertainment"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="CenterContainer/Menu/StartButton" to="." method="_on_start_button_pressed"]

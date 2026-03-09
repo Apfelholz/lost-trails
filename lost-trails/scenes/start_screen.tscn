@@ -56,10 +56,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_tx5wa")
 text = "lost trails"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="CenterContainer/Menu" unique_id=491088873]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-
 [node name="StartButton" type="Button" parent="CenterContainer/Menu" unique_id=373790683]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_he1sj")

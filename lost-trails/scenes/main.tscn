@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://br8ju5rtoc2w2"]
+
+[node name="Node2D" type="Node2D" unique_id=719088600]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1982675731]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=200369692]
+
+[node name="Sprite2D" type="Sprite2D" parent="WorldEnvironment" unique_id=2032618745]

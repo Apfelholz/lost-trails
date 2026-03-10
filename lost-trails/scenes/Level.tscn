@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://bilu64b056mfq" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="1_kl8ac"]
 [ext_resource type="PackedScene" uid="uid://dr8t37851qo4a" path="res://scenes/Layer.tscn" id="2"]
-[ext_resource type="Texture2D" uid="uid://02fd7qk0ovfg" path="res://icon.svg" id="3_dke22"]
 [ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="3_qifjx"]
 [ext_resource type="Script" uid="uid://bqjglnpr61dy" path="res://scripts/background.gd" id="4_m4y05"]
 
@@ -22,32 +21,18 @@ script = ExtResource("4_m4y05")
 [node name="Player" parent="." unique_id=1729362821 instance=ExtResource("1")]
 position = Vector2(5, -1)
 
-[node name="Sprite2D2" type="Sprite2D" parent="Player" unique_id=1574178014]
-texture = ExtResource("3_dke22")
-
 [node name="Boundaries" type="Node2D" parent="." unique_id=1138338239]
 
 [node name="LayerBoundary" parent="Boundaries" unique_id=1307495349 instance=ExtResource("3_qifjx")]
-left = -993.0
-right = 993.0
-top = -479.5
-bottom = 479.5
+height_reduction = 0.0
 
 [node name="LayerBoundary1" parent="Boundaries" unique_id=1600000001 instance=ExtResource("3_qifjx")]
 layer_id = 1
-height_scale = 0.8
-left = -993.0
-right = 993.0
-top = -383.6
-bottom = 383.6
+height_reduction = 0.0
 
 [node name="LayerBoundary2" parent="Boundaries" unique_id=1600000002 instance=ExtResource("3_qifjx")]
 layer_id = 2
-height_scale = 0.6
-left = -993.0
-right = 993.0
-top = -287.7
-bottom = 287.7
+height_reduction = 0.0
 
 [node name="LayerChangeBlockers" type="Node2D" parent="." unique_id=1850406590]
 
@@ -58,9 +43,7 @@ bottom = 287.7
 [node name="Layer1" parent="Layers" unique_id=1197349497 instance=ExtResource("2")]
 layer_id = 1
 perspective_scale = 0.8
-player_y = 450.0
 
 [node name="Layer2" parent="Layers" unique_id=2146405701 instance=ExtResource("2")]
 layer_id = 2
 perspective_scale = 0.6
-player_y = 320.0

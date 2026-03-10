@@ -1,19 +1,52 @@
 [gd_scene format=3 uid="uid://b53ngrsxq6o4e"]
 
-[ext_resource type="Texture2D" uid="uid://ccuyqxl8h6wpy" path="res://assats/black_pannel.png" id="1"]
+[ext_resource type="PackedScene" uid="uid://bilu64b056mfq" path="res://scenes/Player.tscn" id="1_po18h"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_acu8w"]
+[ext_resource type="PackedScene" uid="uid://dr8t37851qo4a" path="res://scenes/Layer.tscn" id="3_no8ju"]
+[ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_yr2pd"]
 
 [node name="Level_01" type="Node2D" unique_id=29613074]
 
-[node name="Background#TextureRect" type="TextureRect" parent="." unique_id=1205192038]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource("1")
-expand_mode = 1
-stretch_mode = 6
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1908781143]
+offset = Vector2(1280, 720)
 
-[node name="Level_01#TileMap" type="TileMap" parent="." unique_id=1282387036]
-position = Vector2(640, 360)
-format = 2
+[node name="Player" parent="." unique_id=1687401005 instance=ExtResource("1_po18h")]
+position = Vector2(633, 599)
+gravity = 10000.0
 
-[node name="Level_01#CanvasLayer" type="CanvasLayer" parent="." unique_id=2065087879]
+[node name="Backround" type="Node2D" parent="." unique_id=858301276]
+
+[node name="Sprite2D" type="Sprite2D" parent="Backround" unique_id=843082061]
+z_index = -1
+scale = Vector2(1.7740818, 1.766871)
+texture = ExtResource("2_acu8w")
+centered = false
+
+[node name="Layer" type="Node2D" parent="." unique_id=190292272]
+
+[node name="Layer" parent="Layer" unique_id=1038947808 instance=ExtResource("3_no8ju")]
+
+[node name="Layer1" parent="Layer" unique_id=786466174 instance=ExtResource("3_no8ju")]
+layer_id = 1
+perspective_scale = 0.8
+
+[node name="Layer2" parent="Layer" unique_id=1521017409 instance=ExtResource("3_no8ju")]
+layer_id = 2
+perspective_scale = 0.6
+
+[node name="Boundaries" type="Node2D" parent="." unique_id=1000911143]
+position = Vector2(1280, 720)
+
+[node name="LayerBoundary" parent="Boundaries" unique_id=1307495349 instance=ExtResource("4_yr2pd")]
+height_reduction = 0.0
+metadata/_edit_lock_ = true
+
+[node name="LayerBoundary1" parent="Boundaries" unique_id=2040728198 instance=ExtResource("4_yr2pd")]
+layer_id = 1
+height_reduction = 250.0
+metadata/_edit_lock_ = true
+
+[node name="LayerBoundary2" parent="Boundaries" unique_id=660492357 instance=ExtResource("4_yr2pd")]
+layer_id = 2
+height_reduction = 500.0
+metadata/_edit_lock_ = true

@@ -84,7 +84,6 @@ func apply_layer():
 	if layer == null:
 		return
 	scale = Vector2(layer.perspective_scale, layer.perspective_scale)
-	position.y = layer.player_y
 	collision_mask = 1 << current_layer
 
 # Spieler auf aktuelle Boundary beschränken

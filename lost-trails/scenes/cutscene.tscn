@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cd580c343rjgj"]
+
+[ext_resource type="Script" uid="uid://b08w3mfxk2tp6" path="res://scripts/cutscene.gd" id="1_scr"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_0sipp"]
+[ext_resource type="Script" path="res://scripts/cutscene_effect.gd" id="2_2bm7f"]
+[ext_resource type="Shader" uid="uid://c0ew3hu5g8b10" path="res://assats/iris_close.gdshader" id="2_sdr"]
+
+[sub_resource type="Resource" id="Resource_fs8wb"]
+script = ExtResource("2_2bm7f")
+type = 5
+duration = 10.0
+
+[sub_resource type="Resource" id="Resource_2bm7f"]
+script = ExtResource("2_2bm7f")
+type = 1
+
+[sub_resource type="Resource" id="Resource_bb0yx"]
+script = ExtResource("2_2bm7f")
+duration = 3.0
+
+[sub_resource type="Resource" id="Resource_3ptll"]
+script = ExtResource("2_2bm7f")
+type = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iris"]
+shader = ExtResource("2_sdr")
+shader_parameter/iris_radius = 1.1
+shader_parameter/softness = 0.04
+shader_parameter/ellipse_ratio = 1.8
+
+[node name="Cutscene" type="Control" unique_id=747066423]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_scr")
+next_scene = "uid://b53ngrsxq6o4e"
+effects = Array[ExtResource("2_2bm7f")]([SubResource("Resource_fs8wb"), SubResource("Resource_2bm7f"), SubResource("Resource_bb0yx"), SubResource("Resource_3ptll")])
+
+[node name="Background" type="TextureRect" parent="." unique_id=1411535714]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0sipp")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EffectsLayer" type="CanvasLayer" parent="." unique_id=1983020899]
+layer = 10
+
+[node name="FadeOverlay" type="ColorRect" parent="EffectsLayer" unique_id=15393260]
+visible = false
+color = Color(0, 0, 0, 1)
+
+[node name="VignetteOverlay" type="ColorRect" parent="EffectsLayer" unique_id=567217474]
+visible = false
+material = SubResource("ShaderMaterial_iris")
+
+[node name="BlinkOverlay" type="ColorRect" parent="EffectsLayer" unique_id=115523371]
+visible = false
+color = Color(0, 0, 0, 1)

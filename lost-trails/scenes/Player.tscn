@@ -8,6 +8,8 @@ size = Vector2(128, 127)
 
 [node name="Player" type="CharacterBody2D" unique_id=1687401005]
 script = ExtResource("1")
+jump_force = -3000.0
+gravity = 10000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=716221477]
 position = Vector2(0, -23.5)

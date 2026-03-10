@@ -6,6 +6,7 @@ extends CharacterBody2D
 
 var current_layer: int = 0
 var can_change_layer: bool = true
+var on_boundary_floor: bool = false
 
 var layers := []
 var boundaries := []
@@ -20,19 +21,22 @@ func _physics_process(delta):
 	if current_boundary == null or boundaries_by_id.is_empty() or layers_by_id.is_empty():
 		_init_layers_and_boundaries()
 
+	var s: float = scale.x  # perspective_scale des aktuellen Layers
+
 	var direction := 0
 	if Input.is_action_pressed("move_left"):
 		direction -= 1
 	if Input.is_action_pressed("move_right"):
 		direction += 1
 
-	velocity.x = direction * speed
+	velocity.x = direction * speed * s
 
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	if not is_on_floor() and not on_boundary_floor:
+		velocity.y += gravity * s * delta
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_force
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or on_boundary_floor):
+		velocity.y = jump_force * s
+		on_boundary_floor = false
 
 	if can_change_layer:
 		if Input.is_action_just_pressed("move_forward"):
@@ -89,20 +93,36 @@ func apply_layer():
 # Spieler auf aktuelle Boundary beschränken
 func limit_to_boundary():
 	if current_boundary == null:
+		on_boundary_floor = false
 		return
 	var shape_node: CollisionShape2D = current_boundary.get_node_or_null("CollisionShape2D")
 	if shape_node == null or shape_node.shape == null:
+		on_boundary_floor = false
 		return
-	var shape = shape_node.shape
-	if shape is RectangleShape2D:
-		var size = shape.size
+	var boundary_shape = shape_node.shape
+	if boundary_shape is RectangleShape2D:
+		var size = boundary_shape.size
 		var center = current_boundary.to_global(shape_node.position)
 		var left = center.x - size.x / 2
 		var right = center.x + size.x / 2
 		var top = center.y - size.y / 2
 		var bottom = center.y + size.y / 2
-		position.x = clamp(position.x, left, right)
-		position.y = clamp(position.y, top, bottom)
+
+		# Eigene CollisionShape einbeziehen, damit der Spieler nicht durch die Ränder ragt
+		var player_col: CollisionShape2D = get_node_or_null("CollisionShape2D")
+		if player_col != null and player_col.shape is RectangleShape2D:
+			var ps := player_col.shape as RectangleShape2D
+			# col_offset und half_ext im Weltkoordinatensystem (skaliert)
+			var col_offset: Vector2 = player_col.position * scale
+			var half_ext: Vector2 = ps.size / 2.0 * scale
+			var bottom_clamp: float = bottom - col_offset.y - half_ext.y
+			position.x = clamp(position.x, left - col_offset.x + half_ext.x, right - col_offset.x - half_ext.x)
+			position.y = clamp(position.y, top - col_offset.y + half_ext.y, bottom_clamp)
+			on_boundary_floor = position.y >= bottom_clamp - 1.0
+		else:
+			position.x = clamp(position.x, left, right)
+			position.y = clamp(position.y, top, bottom)
+			on_boundary_floor = position.y >= bottom - 1.0
 
 func _get_boundary_bottom(boundary: Area2D) -> float:
 	if boundary == null:

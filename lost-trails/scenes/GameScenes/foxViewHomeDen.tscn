@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://uk3arptujo6j"]
+
+[ext_resource type="Script" uid="uid://b08w3mfxk2tp6" path="res://scripts/cutscene.gd" id="1_nrj1f"]
+[ext_resource type="Script" uid="uid://dm7q4x8e2rf0n" path="res://scripts/cutscene_effect.gd" id="2_y6bs4"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="3_vfw48"]
+[ext_resource type="Shader" uid="uid://c0ew3hu5g8b10" path="res://assats/iris_close.gdshader" id="4_s288s"]
+
+[sub_resource type="Resource" id="Resource_nrj1f"]
+script = ExtResource("2_y6bs4")
+type = 2
+duration = 0.0
+metadata/_custom_type_script = "uid://dm7q4x8e2rf0n"
+
+[sub_resource type="Resource" id="Resource_fadein"]
+script = ExtResource("2_y6bs4")
+
+[sub_resource type="Resource" id="Resource_y6bs4"]
+script = ExtResource("2_y6bs4")
+type = 1
+duration = 0.0
+metadata/_custom_type_script = "uid://dm7q4x8e2rf0n"
+
+[sub_resource type="Resource" id="Resource_wait"]
+script = ExtResource("2_y6bs4")
+type = 5
+blink_count = 2
+
+[sub_resource type="Resource" id="Resource_vfw48"]
+script = ExtResource("2_y6bs4")
+type = 1
+duration = 2.0
+blink_count = 1
+metadata/_custom_type_script = "uid://dm7q4x8e2rf0n"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcfg3"]
+shader = ExtResource("4_s288s")
+shader_parameter/iris_radius = 1.1
+shader_parameter/softness = 0.04
+shader_parameter/ellipse_ratio = 1.8
+
+[node name="Cutscene" type="Control" unique_id=457213774]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nrj1f")
+next_scene = "uid://b53ngrsxq6o4e"
+effects = Array[ExtResource("2_y6bs4")]([SubResource("Resource_nrj1f"), SubResource("Resource_fadein"), SubResource("Resource_y6bs4"), SubResource("Resource_wait"), SubResource("Resource_vfw48")])
+
+[node name="Background" type="TextureRect" parent="." unique_id=1212659607]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vfw48")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EffectsLayer" type="CanvasLayer" parent="." unique_id=801390523]
+layer = 10
+
+[node name="FadeOverlay" type="ColorRect" parent="EffectsLayer" unique_id=226211931]
+visible = false
+color = Color(0, 0, 0, 1)
+
+[node name="VignetteOverlay" type="ColorRect" parent="EffectsLayer" unique_id=1750749422]
+visible = false
+material = SubResource("ShaderMaterial_pcfg3")
+
+[node name="BlinkOverlay" type="ColorRect" parent="EffectsLayer" unique_id=1594435328]
+visible = false
+color = Color(0, 0, 0, 1)

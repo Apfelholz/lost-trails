@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://77h3akgbg6ed"]
 
-[ext_resource type="Script" uid="uid://c8wadsiy86inc" path="res://start_screen.gd" id="1_o7i0r"]
-[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="1_tx5wa"]
-[ext_resource type="FontFile" uid="uid://cxcvhobljojnk" path="res://assats/NotoSans_Condensed-Black.ttf" id="3_he1sj"]
+[ext_resource type="Script" uid="uid://c8wadsiy86inc" path="res://start_screen.gd" id="1_7d2ob"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_khpup"]
+[ext_resource type="FontFile" uid="uid://cxcvhobljojnk" path="res://assats/NotoSans_Condensed-Black.ttf" id="3_hs1lf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tx5wa"]
 content_margin_left = 30.0
@@ -22,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_o7i0r")
+script = ExtResource("1_7d2ob")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1898177423]
 layout_mode = 1
@@ -31,7 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_tx5wa")
+texture = ExtResource("2_khpup")
 expand_mode = 1
 stretch_mode = 6
 
@@ -50,7 +50,7 @@ alignment = 1
 
 [node name="Title" type="Label" parent="CenterContainer/Menu" unique_id=955467119]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_he1sj")
+theme_override_fonts/font = ExtResource("3_hs1lf")
 theme_override_font_sizes/font_size = 72
 theme_override_styles/normal = SubResource("StyleBoxFlat_tx5wa")
 text = "lost trails"
@@ -58,7 +58,7 @@ horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="CenterContainer/Menu" unique_id=373790683]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_he1sj")
+theme_override_fonts/font = ExtResource("3_hs1lf")
 theme_override_font_sizes/font_size = 24
 text = "Start Game"
 
@@ -74,7 +74,7 @@ grow_vertical = 0
 
 [node name="Credits" type="Label" parent="CreditsContainer" unique_id=1703391105]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_he1sj")
+theme_override_fonts/font = ExtResource("3_hs1lf")
 theme_override_font_sizes/font_size = 18
 text = "Developed by brødre-Entertainment"
 horizontal_alignment = 1

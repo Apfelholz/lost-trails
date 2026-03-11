@@ -6,3 +6,5 @@ func _input(event: InputEvent) -> void:
 		get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")
 	elif event is InputEventScreenTouch and event.pressed:
 		get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")
+	elif event is InputEventKey and event.pressed:
+		get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")

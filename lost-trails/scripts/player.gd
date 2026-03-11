@@ -65,6 +65,10 @@ func change_layer(dir: int):
 	var new_layer := current_layer + dir
 	if not layers_by_id.has(new_layer):
 		return
+	if _would_overlap_obstacle(new_layer):
+		return
+	if _would_overlap_obstacle_polygon(new_layer):
+		return
 
 	var prev_boundary := current_boundary
 	var prev_bottom: float = _get_boundary_bottom(prev_boundary)
@@ -123,6 +127,90 @@ func limit_to_boundary():
 			position.x = clamp(position.x, left, right)
 			position.y = clamp(position.y, top, bottom)
 			on_boundary_floor = position.y >= bottom - 1.0
+
+# Prüft geometrisch ob der Spieler beim Wechsel auf target_layer
+# innerhalb eines Hindernisses liegen würde.
+# Rechnet dabei den Y-Versatz durch den Boundary-Wechsel mit ein.
+func _would_overlap_obstacle(target_layer: int) -> bool:
+	var player_col := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if player_col == null or not (player_col.shape is RectangleShape2D):
+		return false
+
+	# Y-Versatz berechnen der beim Layer-Wechsel angewendet wird
+	var target_boundary: Area2D = boundaries_by_id.get(target_layer, null) as Area2D
+	var cur_bottom := _get_boundary_bottom(current_boundary)
+	var tgt_bottom := _get_boundary_bottom(target_boundary)
+	var y_offset := 0.0
+	if not is_nan(cur_bottom) and not is_nan(tgt_bottom):
+		y_offset = tgt_bottom - cur_bottom
+
+	# Scale des Ziellayers ermitteln
+	var tgt_layer_node: Node2D = layers_by_id.get(target_layer, null) as Node2D
+	var tgt_scale := scale
+	if tgt_layer_node != null:
+		tgt_scale = Vector2(tgt_layer_node.perspective_scale, tgt_layer_node.perspective_scale)
+
+	var ps := player_col.shape as RectangleShape2D
+	var projected_center := global_position + Vector2(0, y_offset) + player_col.position * tgt_scale
+	var player_half := ps.size / 2.0 * tgt_scale
+	var player_rect := Rect2(projected_center - player_half, ps.size * tgt_scale)
+
+	for obs in get_tree().get_nodes_in_group("obstacle"):
+		if obs.get("layer_id") != target_layer:
+			continue
+		var obs_col := obs.get_node_or_null("CollisionShape2D") as CollisionShape2D
+		if obs_col == null or not (obs_col.shape is RectangleShape2D):
+			continue
+		var os_ := obs_col.shape as RectangleShape2D
+		var obs_half := os_.size / 2.0
+		var obs_rect := Rect2(obs_col.global_position - obs_half, os_.size)
+		if obs_rect.intersects(player_rect):
+			return true
+	return false
+
+
+# Prüft geometrisch ob der Spieler beim Wechsel auf target_layer
+# mit einem Polygon-Hindernis überlappen würde
+func _would_overlap_obstacle_polygon(target_layer: int) -> bool:
+	var player_col := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if player_col == null or not (player_col.shape is RectangleShape2D):
+		return false
+
+	var target_boundary: Area2D = boundaries_by_id.get(target_layer, null) as Area2D
+	var cur_bottom := _get_boundary_bottom(current_boundary)
+	var tgt_bottom := _get_boundary_bottom(target_boundary)
+	var y_offset := 0.0
+	if not is_nan(cur_bottom) and not is_nan(tgt_bottom):
+		y_offset = tgt_bottom - cur_bottom
+
+	var tgt_layer_node: Node2D = layers_by_id.get(target_layer, null) as Node2D
+	var tgt_scale := scale
+	if tgt_layer_node != null:
+		tgt_scale = Vector2(tgt_layer_node.perspective_scale, tgt_layer_node.perspective_scale)
+
+	var ps := player_col.shape as RectangleShape2D
+	var projected_center := global_position + Vector2(0, y_offset) + player_col.position * tgt_scale
+	var half := ps.size / 2.0 * tgt_scale
+	var player_poly := PackedVector2Array([
+		projected_center + Vector2(-half.x, -half.y),
+		projected_center + Vector2( half.x, -half.y),
+		projected_center + Vector2( half.x,  half.y),
+		projected_center + Vector2(-half.x,  half.y),
+	])
+
+	for obs in get_tree().get_nodes_in_group("obstacle_polygon"):
+		if obs.get("layer_id") != target_layer:
+			continue
+		var obs_col := obs.get_node_or_null("CollisionPolygon2D") as CollisionPolygon2D
+		if obs_col == null or obs_col.polygon.size() == 0:
+			continue
+		var obs_poly := PackedVector2Array()
+		for pt in obs_col.polygon:
+			obs_poly.append(obs_col.to_global(pt))
+		if Geometry2D.intersect_polygons(player_poly, obs_poly).size() > 0:
+			return true
+	return false
+
 
 func _get_boundary_bottom(boundary: Area2D) -> float:
 	if boundary == null:

@@ -6,6 +6,16 @@
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(128, 127)
 
+[sub_resource type="Gradient" id="Gradient_v6fml"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3li8b"]
+gradient = SubResource("Gradient_v6fml")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.51282054, 0.48290598)
+fill_to = Vector2(0, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=1687401005]
 script = ExtResource("1")
 jump_force = -3000.0
@@ -18,3 +28,11 @@ shape = SubResource("1")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2059065883]
 position = Vector2(0, -24)
 texture = ExtResource("2_v6fml")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=1123803324]
+position = Vector2(0, 24)
+scale = Vector2(1.5, 1.5)
+energy = 0.72
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_3li8b")
+texture_scale = 50.0

@@ -1,7 +1,8 @@
 extends Control
 
-@onready var start_button = $CenterContainer/Menu/StartButton
 
-
-func _on_start_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")
+	elif event is InputEventScreenTouch and event.pressed:
+		get_tree().change_scene_to_file("res://scenes/GameScenes/foxViewHomeDen.tscn")

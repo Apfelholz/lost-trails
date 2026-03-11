@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://uqpmaqpamsr1"]
+
+[ext_resource type="Script" path="res://scripts/end_screen.gd" id="1_end01"]
+[ext_resource type="FontFile" uid="uid://cxcvhobljojnk" path="res://assats/NotoSans_Condensed-Black.ttf" id="2_end02"]
+[ext_resource type="Shader" path="res://assats/text_glow.gdshader" id="3_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_glow01"]
+shader = ExtResource("3_shader")
+shader_parameter/glow_color = Color(0.2, 0.88, 1, 1)
+shader_parameter/glow_size = 5.5450002158875
+shader_parameter/glow_intensity = 1.6
+
+[node name="EndScreen" type="Control" unique_id=2010922054]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_end01")
+
+[node name="Background" type="ColorRect" parent="." unique_id=378212358]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CreditsContainer" type="Control" parent="." unique_id=515071138]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Credits" type="Label" parent="CreditsContainer" unique_id=844695264]
+material = SubResource("ShaderMaterial_glow01")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 1080.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_end02")
+theme_override_font_sizes/font_size = 36
+text = "LOST TRAILS
+
+The fox continues to follow the trails in the wilderness and beyond, traveling through time and space while discovering the truth about his origin.
+
+
+brødre Entertainment
+
+Game Design & Programming
+@apfelholz
+
+Game Design & Graphics
+@Schproessling
+
+Music & Sound
+
+
+© 2026 brødre Entertainment
+Licensed under CC BY 4.0 (Attribution required)"
+horizontal_alignment = 1
+autowrap_mode = 3

@@ -1,16 +1,25 @@
 [gd_scene format=3 uid="uid://b53ngrsxq6o4e"]
 
-[ext_resource type="PackedScene" uid="uid://bilu64b056mfq" path="res://scenes/Player.tscn" id="1_po18h"]
-[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_acu8w"]
-[ext_resource type="PackedScene" uid="uid://dr8t37851qo4a" path="res://scenes/Layer.tscn" id="3_no8ju"]
-[ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_yr2pd"]
+[ext_resource type="PackedScene" uid="uid://bilu64b056mfq" path="res://scenes/Player.tscn" id="1_ttytu"]
+[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_x3hca"]
+[ext_resource type="PackedScene" uid="uid://dr8t37851qo4a" path="res://scenes/Layer.tscn" id="3_yvavf"]
+[ext_resource type="PackedScene" uid="uid://ceirg1ck8tjbf" path="res://scenes/Obstacle.tscn" id="4_0yt67"]
+[ext_resource type="PackedScene" path="res://scenes/ObstaclePolygon.tscn" id="4_i0vb4"]
+[ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_sk05s"]
+[ext_resource type="PackedScene" uid="uid://c5ygh7cgrmfta" path="res://scenes/SceneTrigger.tscn" id="4_x3hca"]
+[ext_resource type="Texture2D" uid="uid://02fd7qk0ovfg" path="res://icon.svg" id="5_yvavf"]
+[ext_resource type="PackedScene" path="res://scenes/SceneTriggerPolygon.tscn" id="7_i0vb4"]
+[ext_resource type="PackedScene" uid="uid://buvptgoy3q104" path="res://scenes/EnergyParticals.tscn" id="10_vfgnf"]
 
 [node name="Level_01" type="Node2D" unique_id=29613074]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1119999426]
+color = Color(0.2509804, 0.2509804, 0.2509804, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1908781143]
 offset = Vector2(1280, 720)
 
-[node name="Player" parent="." unique_id=1687401005 instance=ExtResource("1_po18h")]
+[node name="Player" parent="." unique_id=1687401005 instance=ExtResource("1_ttytu")]
 position = Vector2(633, 599)
 
 [node name="Backround" type="Node2D" parent="." unique_id=858301276]
@@ -18,34 +27,78 @@ position = Vector2(633, 599)
 [node name="Sprite2D" type="Sprite2D" parent="Backround" unique_id=843082061]
 z_index = -1
 scale = Vector2(1.7740818, 1.766871)
-texture = ExtResource("2_acu8w")
+texture = ExtResource("2_x3hca")
 centered = false
 
 [node name="Layer" type="Node2D" parent="." unique_id=190292272]
 
-[node name="Layer" parent="Layer" unique_id=1038947808 instance=ExtResource("3_no8ju")]
+[node name="Layer" parent="Layer" unique_id=1038947808 instance=ExtResource("3_yvavf")]
+metadata/_edit_lock_ = true
 
-[node name="Layer1" parent="Layer" unique_id=786466174 instance=ExtResource("3_no8ju")]
+[node name="ObstaclePolygon" parent="Layer/Layer" unique_id=1697634229 instance=ExtResource("4_i0vb4")]
+position = Vector2(1296, 1256)
+
+[node name="CollisionPolygon2D" parent="Layer/Layer/ObstaclePolygon" index="0"]
+polygon = PackedVector2Array(-32, -320, 32, -64, 32, 144, -32, 64)
+
+[node name="Layer1" parent="Layer" unique_id=786466174 instance=ExtResource("3_yvavf")]
 layer_id = 1
 perspective_scale = 0.8
+metadata/_edit_lock_ = true
 
-[node name="Layer2" parent="Layer" unique_id=1521017409 instance=ExtResource("3_no8ju")]
+[node name="Obstacle" parent="Layer/Layer1" unique_id=2046111194 instance=ExtResource("4_0yt67")]
+position = Vector2(1792, 1248)
+
+[node name="CollisionShape2D" parent="Layer/Layer1/Obstacle" index="0" unique_id=2142814069]
+position = Vector2(-8, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Layer/Layer1/Obstacle" unique_id=308236693]
+position = Vector2(-7.9999695, 0)
+scale = Vector2(2.2187498, 1)
+texture = ExtResource("5_yvavf")
+
+[node name="SceneTriggerPolygon" parent="Layer/Layer1" unique_id=1783655016 instance=ExtResource("7_i0vb4")]
+position = Vector2(32, 1248)
+target_scene = "uid://uqpmaqpamsr1"
+
+[node name="Layer2" parent="Layer" unique_id=1521017409 instance=ExtResource("3_yvavf")]
 layer_id = 2
 perspective_scale = 0.6
+metadata/_edit_lock_ = true
+
+[node name="SceneTrigger" parent="Layer/Layer2" unique_id=1048121357 instance=ExtResource("4_x3hca")]
+position = Vector2(2528, 1248)
+target_scene = "uid://77h3akgbg6ed"
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" parent="Layer/Layer2/SceneTrigger" index="0" unique_id=988789634]
+position = Vector2(-16, 0)
+
+[node name="Sprite2D" parent="Layer/Layer2/SceneTrigger" index="1" unique_id=647452365]
+texture = ExtResource("5_yvavf")
 
 [node name="Boundaries" type="Node2D" parent="." unique_id=1000911143]
+visible = false
 position = Vector2(1280, 720)
 
-[node name="LayerBoundary" parent="Boundaries" unique_id=1307495349 instance=ExtResource("4_yr2pd")]
+[node name="LayerBoundary" parent="Boundaries" unique_id=1307495349 instance=ExtResource("4_sk05s")]
 height_reduction = 0.0
 metadata/_edit_lock_ = true
 
-[node name="LayerBoundary1" parent="Boundaries" unique_id=2040728198 instance=ExtResource("4_yr2pd")]
+[node name="LayerBoundary1" parent="Boundaries" unique_id=2040728198 instance=ExtResource("4_sk05s")]
 layer_id = 1
 height_reduction = 250.0
 metadata/_edit_lock_ = true
 
-[node name="LayerBoundary2" parent="Boundaries" unique_id=660492357 instance=ExtResource("4_yr2pd")]
+[node name="LayerBoundary2" parent="Boundaries" unique_id=660492357 instance=ExtResource("4_sk05s")]
 layer_id = 2
 height_reduction = 500.0
 metadata/_edit_lock_ = true
+
+[node name="Node2D" parent="." unique_id=1589092909 instance=ExtResource("10_vfgnf")]
+light_mask = 2
+position = Vector2(2528, 1288)
+
+[editable path="Layer/Layer/ObstaclePolygon"]
+[editable path="Layer/Layer1/Obstacle"]
+[editable path="Layer/Layer2/SceneTrigger"]

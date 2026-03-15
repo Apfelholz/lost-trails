@@ -51,8 +51,6 @@ music by Jakob Knief
 
 Play here: https://apfelholz.itch.io/lost-trails
 
-<iframe frameborder="0" src="https://itch.io/embed/4381598" width="552" height="167"><a href="https://apfelholz.itch.io/lost-trails">lost trails by Apfelholz</a></iframe>
-
 ## License
 
 License information will be added later.

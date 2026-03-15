@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://uqpmaqpamsr1"]
 
-[ext_resource type="Script" path="res://scripts/end_screen.gd" id="1_end01"]
+[ext_resource type="Script" uid="uid://bnkdtfpqvhwm2" path="res://scripts/end_screen.gd" id="1_end01"]
 [ext_resource type="FontFile" uid="uid://cxcvhobljojnk" path="res://assats/NotoSans_Condensed-Black.ttf" id="2_end02"]
-[ext_resource type="Shader" path="res://assats/text_glow.gdshader" id="3_shader"]
+[ext_resource type="Shader" uid="uid://cmpvn3qx8tfe1" path="res://assats/text_glow.gdshader" id="3_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_glow01"]
 shader = ExtResource("3_shader")
@@ -43,6 +43,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 1080.0
+offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_end02")
@@ -60,8 +61,8 @@ Game Design & Programming
 Game Design & Graphics
 @Schproessling
 
-Music & Sound
-
+Music by
+Jakob Knief
 
 © 2026 brødre Entertainment
 Licensed under CC BY 4.0 (Attribution required)"

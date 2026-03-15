@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://77h3akgbg6ed"]
 
 [ext_resource type="Script" uid="uid://c8wadsiy86inc" path="res://start_screen.gd" id="1_7d2ob"]
-[ext_resource type="Texture2D" uid="uid://deidnuxxljn54" path="res://assats/previu_backdrop_forest.jpeg" id="2_khpup"]
+[ext_resource type="Texture2D" uid="uid://bhc4hrsj8i6cx" path="res://assats/Logo_Hintergrund_V3.png" id="2_khpup"]
 [ext_resource type="FontFile" uid="uid://cxcvhobljojnk" path="res://assats/NotoSans_Condensed-Black.ttf" id="3_hs1lf"]
+[ext_resource type="Texture2D" uid="uid://ddb62y8lgqk61" path="res://assats/Logo_Lost_Trails.png" id="3_khpup"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tx5wa"]
 content_margin_left = 30.0
@@ -46,6 +47,11 @@ grow_vertical = 2
 [node name="Menu" type="VBoxContainer" parent="CenterContainer" unique_id=1718600654]
 layout_mode = 2
 theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Menu" unique_id=513966178]
+layout_mode = 2
+texture = ExtResource("3_khpup")
+expand_mode = 5
 
 [node name="Title" type="Label" parent="CenterContainer/Menu" unique_id=955467119]
 layout_mode = 2

@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://buvptgoy3q104"]
 
-[ext_resource type="Texture2D" uid="uid://02fd7qk0ovfg" path="res://icon.svg" id="1_xerwk"]
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gun4y"]
 particle_flag_disable_z = true
 emission_shape = 1
@@ -12,5 +10,4 @@ gravity = Vector3(0, 20, 0)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=786876168]
 light_mask = 2
-texture = ExtResource("1_xerwk")
 process_material = SubResource("ParticleProcessMaterial_gun4y")

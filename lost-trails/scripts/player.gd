@@ -109,7 +109,6 @@ func limit_to_boundary():
 		var center = current_boundary.to_global(shape_node.position)
 		var left = center.x - size.x / 2
 		var right = center.x + size.x / 2
-		var top = center.y - size.y / 2
 		var bottom = center.y + size.y / 2
 
 		# Eigene CollisionShape einbeziehen, damit der Spieler nicht durch die Ränder ragt
@@ -121,11 +120,11 @@ func limit_to_boundary():
 			var half_ext: Vector2 = ps.size / 2.0 * scale
 			var bottom_clamp: float = bottom - col_offset.y - half_ext.y
 			position.x = clamp(position.x, left - col_offset.x + half_ext.x, right - col_offset.x - half_ext.x)
-			position.y = clamp(position.y, top - col_offset.y + half_ext.y, bottom_clamp)
+			position.y = min(position.y, bottom_clamp)
 			on_boundary_floor = position.y >= bottom_clamp - 1.0
 		else:
 			position.x = clamp(position.x, left, right)
-			position.y = clamp(position.y, top, bottom)
+			position.y = min(position.y, bottom)
 			on_boundary_floor = position.y >= bottom - 1.0
 
 # Prüft geometrisch ob der Spieler beim Wechsel auf target_layer

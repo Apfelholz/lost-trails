@@ -1,55 +1,55 @@
 # lost-trails
 
-A story-driven indie game about memory, time, and identity.
+> A story-driven indie adventure about memory, time, and identity.
+
+[![Engine: Godot](https://img.shields.io/badge/Engine-Godot-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)](https://godotengine.org/)
+[![Platform: Web](https://img.shields.io/badge/Platform-HTML5%20%2F%20Browser-1f6feb?style=for-the-badge)](#technology)
+[![Release on itch.io](https://img.shields.io/badge/Play_on-itch.io-fa5c5c?style=for-the-badge&logo=itchdotio&logoColor=white)](https://apfelholz.itch.io/lost-trails)
 
 ## Overview
 
-**lost-trails** is a narrative adventure game developed with **Godot** and designed to run directly in the **browser**. The game will be published on **itch.io**.
+**lost-trails** is a narrative adventure game developed with **Godot** and designed to run directly in the browser.
 
-You play as a fox that wakes up after being subjected to a mysterious experiment. With no memories of the past, the fox begins experiencing uncontrolled time jumps, traveling through different eras. During these journeys, the player slowly uncovers the truth behind the experiment and the fox's origin.
+You play as a fox that wakes up after a mysterious experiment. Without memories of the past, the fox is thrown into uncontrolled time jumps across different eras. With each jump, fragments of truth emerge and slowly reveal the fox's origin.
 
-## Features (Planned)
+## Planned Features
 
-* Narrative-driven gameplay
-* Time travel mechanics
-* Exploration across different time periods
-* Story fragments and memory reconstruction
-* Stylized environments and characters
-* Playable directly in the browser
+- Narrative-driven gameplay
+- Time travel mechanics
+- Exploration across different time periods
+- Story fragments and memory reconstruction
+- Stylized environments and characters
+- Playable directly in the browser
 
 ## Technology
 
-* **Engine:** Godot
-* **Platform:** Web (HTML5 / Browser)
-* **Distribution:** itch.io
+- **Engine:** Godot
+- **Platform:** Web (HTML5 / Browser)
+- **Distribution:** itch.io
 
 ## Development Status
 
 Early development.
 
-Features, story elements, and visuals are subject to change during development.
+Story, visuals, and gameplay systems are actively evolving.
 
-## Authors
+## Team
 
-### @apfelholz (GitHub)
+### @apfelholz
 
-**Responsibilities**
-
-* Code
-* Story
+- Code
+- Story
 
 ### @Schprösling
 
-**Responsibilities**
+- Art
+- Story
 
-* Art
-* Story
+music by Jakob Knief
 
-Further information about this contributor will be added later.
+## Release
 
-## Planned Release
-
-The game will be playable directly in the browser via **itch.io**.
+Play here: https://apfelholz.itch.io/lost-trails
 
 ## License
 

@@ -39,6 +39,5 @@ func update_boundary():
 
 	shape.size = Vector2(width, height)
 
-	# Shape im Zentrum lassen
 	if collision:
 		collision.position = Vector2.ZERO

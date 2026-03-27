@@ -4,7 +4,6 @@ var layer_id: int = 0
 
 
 func _ready() -> void:
-	# layer_id automatisch vom nächsten Layer-Elternknoten übernehmen
 	var p = get_parent()
 	while p != null:
 		if p.get_script() != null and "layer_id" in p and "perspective_scale" in p:
@@ -14,11 +13,8 @@ func _ready() -> void:
 
 	add_to_group("obstacle")
 
-	# StaticBody blockiert den Spieler physisch auf diesem Layer
 	collision_layer = 1 << layer_id
 
-	# LayerBlockArea bekommt zur Laufzeit eine Kopie der Hauptshape —
-	# so gibt es im Editor nur eine editierbare Shape ohne UndoRedo-Konflikte
 	var main_col := get_node_or_null("CollisionShape2D") as CollisionShape2D
 	var area := $LayerBlockArea
 	if main_col != null:

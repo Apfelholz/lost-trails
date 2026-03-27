@@ -1,7 +1,6 @@
 extends Sprite2D
 
 func _ready():
-	# Scale and center to cover the current viewport
 	if texture == null:
 		return
 	var tex_size: Vector2 = texture.get_size()

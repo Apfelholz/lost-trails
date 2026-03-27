@@ -43,7 +43,7 @@ func _physics_process(delta):
 	if current_boundary == null or boundaries_by_id.is_empty() or layers_by_id.is_empty():
 		_init_layers_and_boundaries()
 
-	var s: float = scale.x  # perspective_scale des aktuellen Layers
+	var s: float = scale.x
 
 	var direction := 0
 	if Input.is_action_pressed("move_left"):
@@ -177,8 +177,8 @@ func change_layer(dir: int):
 	var prev_bottom: float = _get_boundary_bottom(prev_boundary)
 
 	current_layer = new_layer
-	apply_layer()  # setzt Scale, position
-	update_boundary()  # <-- sicherstellen, dass Boundary sofort gesetzt wird
+	apply_layer()
+	update_boundary()
 
 	var new_bottom: float = _get_boundary_bottom(current_boundary)
 	if not is_nan(prev_bottom) and not is_nan(new_bottom):
@@ -189,7 +189,6 @@ func change_layer(dir: int):
 func update_boundary():
 	current_boundary = boundaries_by_id.get(current_layer, null)
 
-# Layer anwenden
 func apply_layer():
 	var layer = layers_by_id.get(current_layer, null)
 	if layer == null:
@@ -197,7 +196,6 @@ func apply_layer():
 	scale = Vector2(layer.perspective_scale, layer.perspective_scale)
 	collision_mask = 1 << current_layer
 
-# Spieler auf aktuelle Boundary beschränken
 func limit_to_boundary():
 	if current_boundary == null:
 		on_boundary_floor = false
@@ -214,11 +212,9 @@ func limit_to_boundary():
 		var right = center.x + size.x / 2
 		var bottom = center.y + size.y / 2
 
-		# Eigene CollisionShape einbeziehen, damit der Spieler nicht durch die Ränder ragt
 		var player_col: CollisionShape2D = get_node_or_null("CollisionShape2D")
 		if player_col != null and player_col.shape is RectangleShape2D:
 			var ps := player_col.shape as RectangleShape2D
-			# col_offset und half_ext im Weltkoordinatensystem (skaliert)
 			var col_offset: Vector2 = player_col.position * scale
 			var half_ext: Vector2 = ps.size / 2.0 * scale
 			var bottom_clamp: float = bottom - col_offset.y - half_ext.y
@@ -230,15 +226,11 @@ func limit_to_boundary():
 			position.y = min(position.y, bottom)
 			on_boundary_floor = position.y >= bottom - 1.0
 
-# Prüft geometrisch ob der Spieler beim Wechsel auf target_layer
-# innerhalb eines Hindernisses liegen würde.
-# Rechnet dabei den Y-Versatz durch den Boundary-Wechsel mit ein.
 func _would_overlap_obstacle(target_layer: int) -> bool:
 	var player_col := get_node_or_null("CollisionShape2D") as CollisionShape2D
 	if player_col == null or not (player_col.shape is RectangleShape2D):
 		return false
 
-	# Y-Versatz berechnen der beim Layer-Wechsel angewendet wird
 	var target_boundary: Area2D = boundaries_by_id.get(target_layer, null) as Area2D
 	var cur_bottom := _get_boundary_bottom(current_boundary)
 	var tgt_bottom := _get_boundary_bottom(target_boundary)
@@ -246,7 +238,6 @@ func _would_overlap_obstacle(target_layer: int) -> bool:
 	if not is_nan(cur_bottom) and not is_nan(tgt_bottom):
 		y_offset = tgt_bottom - cur_bottom
 
-	# Scale des Ziellayers ermitteln
 	var tgt_layer_node: Node2D = layers_by_id.get(target_layer, null) as Node2D
 	var tgt_scale := scale
 	if tgt_layer_node != null:
@@ -271,8 +262,6 @@ func _would_overlap_obstacle(target_layer: int) -> bool:
 	return false
 
 
-# Prüft geometrisch ob der Spieler beim Wechsel auf target_layer
-# mit einem Polygon-Hindernis überlappen würde
 func _would_overlap_obstacle_polygon(target_layer: int) -> bool:
 	var player_col := get_node_or_null("CollisionShape2D") as CollisionShape2D
 	if player_col == null or not (player_col.shape is RectangleShape2D):
@@ -328,13 +317,11 @@ func _get_boundary_bottom(boundary: Area2D) -> float:
 	return NAN
 
 func update_depth():
-	# Perspektivfaktor pro Layer
 	var scale_factor := 1.0
 	var layer_offset := current_layer * 1000
 	var layer = layers_by_id.get(current_layer, null)
 	if layer != null:
 		scale_factor = layer.perspective_scale
 
-	# z_index innerhalb eines sicheren Bereichs
 	var z := int(global_position.y * scale_factor) + layer_offset
 	z_index = clamp(z, -4096, 4096)

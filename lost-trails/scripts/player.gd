@@ -4,17 +4,39 @@ extends CharacterBody2D
 @export var jump_force: float = -450.0
 @export var gravity: float = 1200.0
 
+enum JumpAnimState { NONE, PRESS, HOLD, RELEASE }
+
+const ANIM_IDLE: StringName = &"idle"
+const ANIM_RUN: StringName = &"run"
+const ANIM_JUMP_PRESS: StringName = &"jump_press"
+const ANIM_JUMP_HOLD: StringName = &"jump_hold"
+const ANIM_JUMP_RELEASE: StringName = &"jump_release"
+
 var current_layer: int = 0
 var can_change_layer: bool = true
 var on_boundary_floor: bool = false
+var facing_left: bool = false
+var jump_anim_state := JumpAnimState.NONE
+var jump_release_queued: bool = false
 
 var layers := []
 var boundaries := []
 var current_boundary: Area2D = null
 var layers_by_id := {}
 var boundaries_by_id := {}
+var visual_sprite: Node = null
+var animated_sprite: AnimatedSprite2D = null
 
 func _ready():
+	animated_sprite = get_node_or_null("AnimatedSprite2D")
+	if animated_sprite != null:
+		visual_sprite = animated_sprite
+		animated_sprite.animation_finished.connect(_on_visual_animation_finished)
+		_play_anim(ANIM_IDLE)
+	else:
+		visual_sprite = get_node_or_null("Sprite2D")
+		if visual_sprite == null:
+			visual_sprite = get_node_or_null("AnimatedSprite2D")
 	call_deferred("_init_layers_and_boundaries")
 
 func _physics_process(delta):
@@ -28,15 +50,14 @@ func _physics_process(delta):
 		direction -= 1
 	if Input.is_action_pressed("move_right"):
 		direction += 1
+	_update_facing(direction)
+	var grounded := is_on_floor() or on_boundary_floor
+	_handle_jump_input(grounded, s)
 
 	velocity.x = direction * speed * s
 
 	if not is_on_floor() and not on_boundary_floor:
 		velocity.y += gravity * s * delta
-
-	if Input.is_action_just_pressed("jump") and (is_on_floor() or on_boundary_floor):
-		velocity.y = jump_force * s
-		on_boundary_floor = false
 
 	if can_change_layer:
 		if Input.is_action_just_pressed("move_forward"):
@@ -47,6 +68,88 @@ func _physics_process(delta):
 	move_and_slide()
 	limit_to_boundary()
 	update_depth()
+	_update_visual_animation(direction, is_on_floor() or on_boundary_floor)
+
+func _handle_jump_input(grounded: bool, s: float):
+	if not grounded and jump_anim_state == JumpAnimState.NONE:
+		return
+
+	if Input.is_action_just_pressed("jump") and grounded and jump_anim_state == JumpAnimState.NONE:
+		_start_jump_press(s)
+
+	if jump_anim_state == JumpAnimState.PRESS and Input.is_action_just_released("jump"):
+		jump_release_queued = true
+	elif jump_anim_state == JumpAnimState.HOLD and Input.is_action_just_released("jump"):
+		_start_jump_release(s)
+
+func _start_jump_press(s: float):
+	if animated_sprite == null or not _has_anim(ANIM_JUMP_PRESS) or not _has_anim(ANIM_JUMP_RELEASE):
+		velocity.y = jump_force * s
+		on_boundary_floor = false
+		return
+
+	jump_anim_state = JumpAnimState.PRESS
+	jump_release_queued = false
+	_play_anim(ANIM_JUMP_PRESS)
+
+func _start_jump_release(s: float):
+	if jump_anim_state == JumpAnimState.RELEASE:
+		return
+
+	jump_anim_state = JumpAnimState.RELEASE
+	jump_release_queued = false
+	velocity.y = jump_force * s
+	on_boundary_floor = false
+	_play_anim(ANIM_JUMP_RELEASE)
+
+func _on_visual_animation_finished():
+	if jump_anim_state == JumpAnimState.PRESS:
+		if Input.is_action_pressed("jump") and not jump_release_queued:
+			jump_anim_state = JumpAnimState.HOLD
+			if _has_anim(ANIM_JUMP_HOLD):
+				_play_anim(ANIM_JUMP_HOLD)
+		else:
+			_start_jump_release(scale.x)
+	elif jump_anim_state == JumpAnimState.RELEASE:
+		jump_anim_state = JumpAnimState.NONE
+
+func _update_visual_animation(direction: int, grounded: bool):
+	if animated_sprite == null:
+		return
+
+	if jump_anim_state == JumpAnimState.PRESS or jump_anim_state == JumpAnimState.HOLD or jump_anim_state == JumpAnimState.RELEASE:
+		return
+
+	if not grounded:
+		if _has_anim(ANIM_JUMP_RELEASE):
+			_play_anim(ANIM_JUMP_RELEASE)
+		return
+
+	if direction != 0:
+		_play_anim(ANIM_RUN)
+	else:
+		_play_anim(ANIM_IDLE)
+
+func _play_anim(anim_name: StringName):
+	if animated_sprite == null or not _has_anim(anim_name):
+		return
+	if animated_sprite.animation == anim_name and animated_sprite.is_playing():
+		return
+	animated_sprite.play(anim_name)
+
+func _has_anim(anim_name: StringName) -> bool:
+	return animated_sprite != null and animated_sprite.sprite_frames != null and animated_sprite.sprite_frames.has_animation(anim_name)
+
+func _update_facing(direction: int):
+	if direction == 0:
+		return
+	facing_left = direction < 0
+	if visual_sprite == null:
+		return
+	if visual_sprite is Sprite2D:
+		(visual_sprite as Sprite2D).flip_h = facing_left
+	elif visual_sprite is AnimatedSprite2D:
+		(visual_sprite as AnimatedSprite2D).flip_h = facing_left
 
 func _init_layers_and_boundaries():
 	layers = get_tree().get_nodes_in_group("layer")

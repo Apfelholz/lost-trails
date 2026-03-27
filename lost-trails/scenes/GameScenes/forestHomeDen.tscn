@@ -5,13 +5,45 @@
 [ext_resource type="PackedScene" uid="uid://dr8t37851qo4a" path="res://scenes/Layer.tscn" id="3_yvavf"]
 [ext_resource type="PackedScene" path="res://scenes/ObstaclePolygon.tscn" id="4_i0vb4"]
 [ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_sk05s"]
+[ext_resource type="Texture2D" uid="uid://clpq1jiv6adbo" path="res://assats/Batterie.png" id="6_xfw6c"]
+[ext_resource type="Texture2D" uid="uid://78s0a2k2agps" path="res://assats/Funken_Frame_1.png" id="7_ddi3m"]
 [ext_resource type="PackedScene" path="res://scenes/SceneTriggerPolygon.tscn" id="7_i0vb4"]
+[ext_resource type="Texture2D" uid="uid://cdtubyh5iikip" path="res://assats/Funken_Frame_2.png" id="8_tqeji"]
+[ext_resource type="Texture2D" uid="uid://bsc3fd8ivudjd" path="res://assats/Funken_Frame_3.png" id="9_wt823"]
+[ext_resource type="Texture2D" uid="uid://dykr3jhj53xd8" path="res://assats/Funken_Frame_4.png" id="10_b721a"]
 
 [sub_resource type="Gradient" id="Gradient_yvavf"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sk05s"]
 gradient = SubResource("Gradient_yvavf")
+fill_from = Vector2(0, 0.6367521)
+fill_to = Vector2(0.6581197, 0.14102565)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ju4rr"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ddi3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_tqeji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wt823")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_b721a")
+}],
+"loop": true,
+"name": &"funken_animation",
+"speed": 5.0
+}]
 
 [node name="Level_01" type="Node2D" unique_id=29613074]
 
@@ -68,12 +100,25 @@ position = Vector2(8, 128)
 polygon = PackedVector2Array(-40, -704, 32, -704, 32, 64, -32, 64)
 
 [node name="PointLight2D" type="PointLight2D" parent="Layer/Layer1/SceneTriggerPolygon" unique_id=809199067]
-position = Vector2(64.639984, -488.64)
+position = Vector2(111.999985, 24)
 rotation = -0.4204946
 scale = Vector2(1.1621188, 2.2255216)
 energy = 0.46
 texture = SubResource("GradientTexture2D_sk05s")
 texture_scale = 12.46
+
+[node name="Sprite2D" type="Sprite2D" parent="Layer/Layer1/SceneTriggerPolygon" unique_id=574335710]
+position = Vector2(119.99999, 15.999998)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("6_xfw6c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Layer/Layer1/SceneTriggerPolygon" unique_id=1322659957]
+position = Vector2(132.99998, -29.999998)
+scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_ju4rr")
+animation = &"funken_animation"
+autoplay = "funken_animation"
+frame_progress = 0.65334207
 
 [node name="Layer2" parent="Layer" unique_id=1521017409 instance=ExtResource("3_yvavf")]
 layer_id = 2

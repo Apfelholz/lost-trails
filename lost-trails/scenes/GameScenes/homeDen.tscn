@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://i4pnmsy4oodf"]
 
 [ext_resource type="PackedScene" uid="uid://bilu64b056mfq" path="res://scenes/Player.tscn" id="1_ttytu"]
-[ext_resource type="Texture2D" uid="uid://cnae0b6qhb58c" path="res://assats/Hole_Lost_Trails.png" id="2_r3b0q"]
+[ext_resource type="Texture2D" uid="uid://csxvule6jq3e3" path="res://assats/Hole_Lost_Trails_Hintergrund.png" id="2_sk05s"]
 [ext_resource type="Script" uid="uid://d3q8as2q3akcl" path="res://scripts/layer.gd" id="3_ttytu"]
 [ext_resource type="PackedScene" path="res://scenes/ObstaclePolygon.tscn" id="4_i0vb4"]
 [ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_sk05s"]
+[ext_resource type="Texture2D" uid="uid://d0kv27yp8bggt" path="res://assats/Hole_Lost_Trails_Seule.png" id="5_0yt67"]
 [ext_resource type="PackedScene" path="res://scenes/SceneTriggerPolygon.tscn" id="7_i0vb4"]
+[ext_resource type="Script" uid="uid://layer_depth_manager" path="res://scripts/layer_depth_manager.gd" id="8_layer_depth"]
 
 [sub_resource type="Gradient" id="Gradient_yvavf"]
 
@@ -17,23 +19,25 @@ fill_to = Vector2(0, 0.46581197)
 [node name="Node2D" type="Node2D" unique_id=871409132]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2096598967]
+visible = false
 color = Color(0.3366076, 0.33660764, 0.33660752, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=739242188]
 offset = Vector2(1280, 720)
 
 [node name="Player" parent="." unique_id=1687401005 instance=ExtResource("1_ttytu")]
-position = Vector2(1256, 1352)
+position = Vector2(384, 1128)
 
 [node name="Backround" type="Node2D" parent="." unique_id=820666218]
 
 [node name="Sprite2D" type="Sprite2D" parent="Backround" unique_id=508501721]
 z_index = -1
 scale = Vector2(0.6666667, 0.6666667)
-texture = ExtResource("2_r3b0q")
+texture = ExtResource("2_sk05s")
 centered = false
 
 [node name="Layer" type="Node2D" parent="." unique_id=295384401]
+script = ExtResource("8_layer_depth")
 
 [node name="Layer" type="Node2D" parent="Layer" unique_id=1139323446]
 script = ExtResource("3_ttytu")
@@ -43,7 +47,19 @@ metadata/_edit_lock_ = true
 position = Vector2(2432, 1200)
 
 [node name="CollisionPolygon2D" parent="Layer/Layer/ObstaclePolygon" index="0"]
-polygon = PackedVector2Array(-32, -168, 128, -168, 128, 64, -32, 64)
+polygon = PackedVector2Array(-88, -168, 128, -168, 128, 56, -88, 56)
+
+[node name="ObstaclePolygon2" parent="Layer/Layer" unique_id=1661824544 instance=ExtResource("4_i0vb4")]
+position = Vector2(1128, 1200)
+
+[node name="CollisionPolygon2D" parent="Layer/Layer/ObstaclePolygon2" index="0"]
+polygon = PackedVector2Array(96, -336, 136, -952, -16, -1200, 464, -1200, 408, -960, 392, -336, 488, 56, -32, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="Layer/Layer" unique_id=1650697797]
+position = Vector2(1280, 720)
+z_index = 0
+scale = Vector2(0.6666666, 0.6666667)
+texture = ExtResource("5_0yt67")
 
 [node name="Layer1" type="Node2D" parent="Layer" unique_id=1688311541]
 script = ExtResource("3_ttytu")
@@ -55,13 +71,27 @@ metadata/_edit_lock_ = true
 position = Vector2(872, 920)
 
 [node name="CollisionPolygon2D" parent="Layer/Layer1/ObstaclePolygon" index="0"]
-polygon = PackedVector2Array(-872, -920, 632, -920, 632, -528, 24, -520, 32, 64, -872, 64)
+polygon = PackedVector2Array(-872, -424, 24, -424, 272, -528, 272, -920, 752, -920, 760, -520, 288, -520, 32, -416, 32, 56, -872, 56)
 
 [node name="ObstaclePolygon2" parent="Layer/Layer1" unique_id=636177536 instance=ExtResource("4_i0vb4")]
 position = Vector2(2000, 888)
 
 [node name="CollisionPolygon2D" parent="Layer/Layer1/ObstaclePolygon2" index="0"]
 polygon = PackedVector2Array(-240, -272, 160, -272, 160, -88, 488, -88, 488, -888, 560, -888, 560, 104, -240, 104)
+
+[node name="SceneTriggerPolygon" parent="Layer/Layer1" unique_id=1746096522 instance=ExtResource("7_i0vb4")]
+position = Vector2(32, 64)
+target_scene = "uid://b53ngrsxq6o4e"
+required_layer_id = 1
+
+[node name="CollisionPolygon2D" parent="Layer/Layer1/SceneTriggerPolygon" index="0"]
+polygon = PackedVector2Array(-32, 56, 200, 56, 200, 480, -32, 480)
+
+[node name="PointLight2D" type="PointLight2D" parent="Layer/Layer1/SceneTriggerPolygon" unique_id=1218636319]
+position = Vector2(32.000004, 132)
+scale = Vector2(2.2500002, 6.1249995)
+energy = 0.46
+texture = SubResource("GradientTexture2D_sk05s")
 
 [node name="Layer2" type="Node2D" parent="Layer" unique_id=412273503]
 script = ExtResource("3_ttytu")
@@ -73,21 +103,7 @@ metadata/_edit_lock_ = true
 position = Vector2(2024, 800)
 
 [node name="CollisionPolygon2D" parent="Layer/Layer2/ObstaclePolygon" index="0"]
-polygon = PackedVector2Array(-56, -440, -56, -800, 536, -808, 536, 64, -2024, 72, -2024, -440)
-
-[node name="SceneTriggerPolygon" parent="Layer/Layer2" unique_id=1746096522 instance=ExtResource("7_i0vb4")]
-position = Vector2(32, 64)
-target_scene = "uid://b53ngrsxq6o4e"
-required_layer_id = 2
-
-[node name="CollisionPolygon2D" parent="Layer/Layer2/SceneTriggerPolygon" index="0"]
-polygon = PackedVector2Array(-32, -64, 32, -64, 32, 296, -32, 296)
-
-[node name="PointLight2D" type="PointLight2D" parent="Layer/Layer2/SceneTriggerPolygon" unique_id=1218636319]
-position = Vector2(32.000004, 132)
-scale = Vector2(2.2500002, 6.1249995)
-energy = 0.46
-texture = SubResource("GradientTexture2D_sk05s")
+polygon = PackedVector2Array(0, -440, -8, -808, 536, -808, 536, 64, -2024, 72, -2024, -440, -2024, -800, -1280, -800, -1280, -440)
 
 [node name="Boundaries" type="Node2D" parent="." unique_id=1164071319]
 position = Vector2(1280, 720)
@@ -98,7 +114,7 @@ metadata/_edit_lock_ = true
 
 [node name="LayerBoundary1" parent="Boundaries" unique_id=1006082673 instance=ExtResource("4_sk05s")]
 layer_id = 1
-height_reduction = 910.0
+height_reduction = 966.0
 metadata/_edit_lock_ = true
 
 [node name="LayerBoundary2" parent="Boundaries" unique_id=942701797 instance=ExtResource("4_sk05s")]
@@ -107,7 +123,8 @@ height_reduction = 1336.0
 metadata/_edit_lock_ = true
 
 [editable path="Layer/Layer/ObstaclePolygon"]
+[editable path="Layer/Layer/ObstaclePolygon2"]
 [editable path="Layer/Layer1/ObstaclePolygon"]
 [editable path="Layer/Layer1/ObstaclePolygon2"]
+[editable path="Layer/Layer1/SceneTriggerPolygon"]
 [editable path="Layer/Layer2/ObstaclePolygon"]
-[editable path="Layer/Layer2/SceneTriggerPolygon"]

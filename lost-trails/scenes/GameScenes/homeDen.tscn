@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cvgkd0nkh7dlo" path="res://scenes/LayerBoundary.tscn" id="4_sk05s"]
 [ext_resource type="Texture2D" uid="uid://d0kv27yp8bggt" path="res://assats/Hole_Lost_Trails_Seule.png" id="5_0yt67"]
 [ext_resource type="PackedScene" path="res://scenes/SceneTriggerPolygon.tscn" id="7_i0vb4"]
-[ext_resource type="Script" uid="uid://layer_depth_manager" path="res://scripts/layer_depth_manager.gd" id="8_layer_depth"]
+[ext_resource type="Script" uid="uid://dxmkpivcuo4bb" path="res://scripts/layer_depth_manager.gd" id="8_layer_depth"]
 
 [sub_resource type="Gradient" id="Gradient_yvavf"]
 
@@ -57,7 +57,6 @@ polygon = PackedVector2Array(96, -336, 136, -952, -16, -1200, 464, -1200, 408, -
 
 [node name="Sprite2D" type="Sprite2D" parent="Layer/Layer" unique_id=1650697797]
 position = Vector2(1280, 720)
-z_index = 0
 scale = Vector2(0.6666666, 0.6666667)
 texture = ExtResource("5_0yt67")
 
@@ -106,6 +105,7 @@ position = Vector2(2024, 800)
 polygon = PackedVector2Array(0, -440, -8, -808, 536, -808, 536, 64, -2024, 72, -2024, -440, -2024, -800, -1280, -800, -1280, -440)
 
 [node name="Boundaries" type="Node2D" parent="." unique_id=1164071319]
+visible = false
 position = Vector2(1280, 720)
 
 [node name="LayerBoundary" parent="Boundaries" unique_id=1307495349 instance=ExtResource("4_sk05s")]

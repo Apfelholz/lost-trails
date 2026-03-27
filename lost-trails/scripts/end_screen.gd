@@ -1,5 +1,7 @@
 extends Control
 
+var _music: AudioStreamPlayer
+
 const SCROLL_SPEED: float = 80.0
 
 @onready var credits: Label = $CreditsContainer/Credits
@@ -7,6 +9,13 @@ const SCROLL_SPEED: float = 80.0
 
 func _ready() -> void:
 	credits.position.y = get_viewport_rect().size.y
+	_music = AudioStreamPlayer.new()
+	add_child(_music)
+	var stream = load("res://assats/music/Fox's Theme.mp3")
+	if stream:
+		stream.loop = true
+		_music.stream = stream
+		_music.play()
 
 
 func _process(delta: float) -> void:
